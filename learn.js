@@ -1,87 +1,81 @@
-//check if there's local storage option color
 let mainColors = localStorage.getItem("color_option");
 if (mainColors !== null) {
   document.documentElement.style.setProperty("--main--color", mainColors);
-  //remove active class from all colors list items
+  // إزالة الفئة النشطة من جميع عناصر قائمة الألوان
   document.querySelectorAll(".colors-list li").forEach((element) => {
     element.classList.remove("active");
-    //add class active on element with data color === local storage items
+    // إضافة الفئة النشطة للعنصر المطابق للون المخزن في Local Storage
     if (element.dataset.color === mainColors) {
       element.classList.add("active");
     }
   });
 }
-//
-// random backgroun option
-let backgrounOption = true;
-//variable to control the interval
-let backgrounInterval;
 
-//check if there's local storage random backgroun item
+// التحكم في خيار الخلفية العشوائية
+let backgroundOption = true;
+// متغير للتحكم في الـ Interval الخاص بتغيير الخلفيات
+let backgroundInterval;
+
+// التحقق مما إذا كان هناك إعداد للخلفية العشوائية في Local Storage
 let backgroundLocalItem = localStorage.getItem("background_option");
-//check random local storage
 if (backgroundLocalItem !== null) {
-  if (backgroundLocalItem === "true") {
-    backgrounOption = true;
-  } else {
-    backgrounOption = false;
-  }
-  //remove active class from all span
-  document.querySelectorAll(".random-Backgrounds span").forEach((element) => {
+  backgroundOption = backgroundLocalItem === "true";
+  
+  // إزالة الفئة النشطة من جميع العناصر
+  document.querySelectorAll(".random-backgrounds span").forEach((element) => {
     element.classList.remove("active");
   });
-  if (backgroundLocalItem === "true") {
-    document.querySelector(".random-Backgrounds .yes").classList.add("active");
+  
+  if (backgroundOption) {
+    document.querySelector(".random-backgrounds .yes").classList.add("active");
   } else {
-    document.querySelector(".random-Backgrounds .no").classList.add("active");
+    document.querySelector(".random-backgrounds .no").classList.add("active");
   }
 }
 
-//click on toggle settings
+// عند النقر على إعدادات التبديل
 document.querySelector(".toggle-setting i").onclick = function () {
   this.classList.toggle("fa-spin");
   document.querySelector(".settings-box").classList.toggle("open");
 };
-////switch color
+
+// تبديل الألوان
 const colorLi = document.querySelectorAll(".colors-list li");
-//loop in all list li
+// حلقة تكرار على جميع عناصر قائمة الألوان
 colorLi.forEach((li) => {
-  //click ion event list Itemd
   li.addEventListener("click", (e) => {
-    //set color on root
-    document.documentElement.style.setProperty(
-      "--main--color",
-      e.target.dataset.color
-    );
-    //set color on local storage
-    localStorage.setItem("color-option", e.target.dataset.color);
-    //remove active class from all children
+    // تعيين اللون الجذري
+    document.documentElement.style.setProperty("--main--color", e.target.dataset.color);
+    // تخزين اللون في Local Storage
+    localStorage.setItem("color_option", e.target.dataset.color);
+    // إزالة الفئة النشطة من جميع العناصر
     handleActive(e);
   });
 });
-//
-//switch background
-const randomBackEl = document.querySelectorAll(".random-Backgrounds span");
-//loop in all span
+
+// تبديل الخلفيات
+const randomBackEl = document.querySelectorAll(".random-backgrounds span");
+// حلقة تكرار على جميع العناصر
 randomBackEl.forEach((span) => {
-  //click ion event span
   span.addEventListener("click", (e) => {
     handleActive(e);
     if (e.target.dataset.background === "yes") {
-      backgrounOption = true;
+      backgroundOption = true;
       randomizeImgs();
       localStorage.setItem("background_option", true);
     } else {
-      backgrounOption = false;
-      clearInterval(backgrounInterval);
+      backgroundOption = false;
+      clearInterval(backgroundInterval);
       localStorage.setItem("background_option", false);
     }
   });
 });
-//select landing page Element
+
+// اختيار عنصر الصفحة الرئيسية
 let landingPage = document.querySelector(".landing-page");
-//Get Array Of Imgs
-let imagArrar = [
+
+// مصفوفة الصور
+let imgArray = [
   "cat-01.jpg",
   "cat-02.jpg",
   "cat-03.jpg",
@@ -89,22 +83,17 @@ let imagArrar = [
   "cat-05.jpg",
 ];
 
-//function to randomize imgs
+// دالة لتبديل الخلفيات بشكل عشوائي
 function randomizeImgs() {
-  if (backgrounOption === true) {
-    backgrounInterval = setInterval(() => {
-      //get random number
-      let randomNumber = Math.floor(Math.random() * imagArrar.length);
-      //change backgroun Image Url
-      landingPage.style.backgroundImage =
-        'url("/Spacil-Desgin/image/' + imagArrar[randomNumber] + '")';
+  if (backgroundOption === true) {
+    backgroundInterval = setInterval(() => {
+      let randomNumber = Math.floor(Math.random() * imgArray.length);
+      landingPage.style.backgroundImage = 'url("/Spacil-Desgin/image/' + imgArray[randomNumber] + '")';
     }, 1000);
-    //
   }
 }
 randomizeImgs();
-//
-//
+
 //
 //
 //select skills selector
