@@ -97,7 +97,7 @@ function randomizeImgs() {
       let randomNumber = Math.floor(Math.random() * imagArrar.length);
       //change backgroun Image Url
       landingPage.style.backgroundImage =
-        'url("../New folder/image/' + imagArrar[randomNumber] + '")';
+        'url("./image/' + imagArrar[randomNumber] + '")';
     }, 1000);
     //
   }
