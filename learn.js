@@ -88,7 +88,7 @@ function randomizeImgs() {
   if (backgroundOption === true) {
     backgroundInterval = setInterval(() => {
       let randomNumber = Math.floor(Math.random() * imgArray.length);
-      landingPage.style.backgroundImage = 'url("/Spacil-Desgin/image/' + imgArray[randomNumber] + '")';
+      landingPage.style.backgroundImage = 'url("/image/' + imgArray[randomNumber] + '")';
     }, 1000);
   }
 }
